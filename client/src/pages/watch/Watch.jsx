@@ -1,17 +1,23 @@
-import { ArrowBackOutlined } from "@mui/icons-material"
-import "./watch.scss"
+import { ArrowBackOutlined } from "@mui/icons-material";
+import "./watch.scss";
+import { useLocation, Link } from "react-router-dom";
 
 function Watch() {
+  const location = useLocation();
+  const movie= location.state.movie;
+
   return (
     <div className="watch">
-        <div className="back">
-            <ArrowBackOutlined/>
-            Home
+    <Link to="/">
+      <div className="back">
+        <ArrowBackOutlined />
+        Home
         </div>
+    </Link>
 
-        <video className="video" autoPlay progress controls src="http://media.w3.org/2010/05/sintel/trailer.mp4" />
-    </div>
-  )
+<video className="video" autoPlay progress controls src={movie.video} />
+</div>
+  );
 }
 
-export default Watch
+export default Watch;

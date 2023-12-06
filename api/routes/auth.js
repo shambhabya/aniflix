@@ -24,6 +24,7 @@ router.post("/register",async (req,res)=>{
 router.post('/login', async (req, res) => {
     try {
         // Find the user by email
+        console.log(req.user);
         const user = await User.findOne({ email: req.body.email });
 
         // If no user is found, respond with an error
@@ -41,7 +42,7 @@ router.post('/login', async (req, res) => {
         const accessToken = jwt.sign(
             { id: user._id, isAdmin: user.isAdmin },
              process.env.SECRET_KEY, 
-             {expiresIn: "5d"} );
+             {expiresIn: "30d"} );
 
         const { password, ...info } = user._doc;
 
@@ -52,5 +53,7 @@ router.post('/login', async (req, res) => {
         res.status(500).json('Internal server error');
     }
 });
+
+
 
 module.exports = router;

@@ -8,7 +8,7 @@ function Register() {
     <div className="login">
         <div className="top">
         <div className="wrapper">
-            <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="" srcset="" />
+            <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="" srcSet="" />
         </div>
         </div>
         <div className="container">

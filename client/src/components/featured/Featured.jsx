@@ -1,12 +1,34 @@
 import { InfoOutlined, PlayArrow } from "@mui/icons-material"
 import "./featured.scss"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 function Featured({type}) {
+
+    const [content, setContent] = useState({});
+
+    useEffect(()=>{
+        const getRandomContent = async ()=>{
+            try {
+                const res = await axios.get(`api/movies/random?type=${type}`,  {
+                    headers: {
+                      token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMDA2NTMxMiwiZXhwIjoxNzAyNjU3MzEyfQ.-a0s5jx80wuP6Wns2USa1ryJONFqOIYSH7m9hyUdcCY"
+                    },
+                  });
+                  console.log(res.data)
+                setContent(res.data[0]);
+            } catch (err){
+                console.log(err);
+            }
+        };
+        getRandomContent();
+    }, [type])
+
   return (
     <div className="featured">
     {type && (
         <div className="category">
-            <span>{type === "movie" ? "Movies" : "Series"}</span>
+            <span>{type === "movies" ? "Movies" : "Series"}</span>
             <select name="genre" id="genre">
                 <option>Genre</option>
                 <option value="drama">Drama</option>
@@ -32,11 +54,11 @@ function Featured({type}) {
         </div>
     )}
 
-        <img src="https://images.squarespace-cdn.com/content/v1/59d7e2c7e45a7c0ce235bb55/58a05e66-ab47-4ab1-b6fd-f42efb4a51df/Film-Review-The-Matrix-Resurrections.jpg?format=2500w"></img>
+        <img src={content.img}></img>
         <div className="info">
-            <img src="https://www.themoviedb.org/t/p/original/kA8phmxG7h4BIN061fiutckq9Ho.png"/>
+            <img src={content.imgSm}/>
             <span className="dsc">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque porta ante eget laoreet scelerisque. Donec elit elit, faucibus ac elit non, pellentesque efficitur tellus. Ut porta nunc neque, at dictum urna tincidunt nec. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean ul
+           {content.desc}
             </span>
             <div className="buttons">
                 <button className="play">

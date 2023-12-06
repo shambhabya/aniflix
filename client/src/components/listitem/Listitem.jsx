@@ -1,46 +1,67 @@
-import { Add, PlayArrow, ThumbDown, ThumbDownOutlined, ThumbUpAltOutlined } from "@mui/icons-material"
-import "./listitem.scss"
-import { useState } from "react"
+import "./listItem.scss";
+import {
+  PlayArrow,
+  Add,
+  ThumbUpAltOutlined,
+  ThumbDownOutlined,
+} from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-function Listitem({index}) {
+export default function ListItem({ index, item}) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [movie, setMovie] = useState({});
 
-const [isHovered, setIsHovered] = useState(false);
-const trailer = "https://youtu.be/2QKg5SZ_35I";
+
+  useEffect(() => {
+    const getMovie = async () => {
+      try {
+        const res = await axios.get("api/movies/find/" + item, {
+          headers: {
+            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMDA2NTMxMiwiZXhwIjoxNzAyNjU3MzEyfQ.-a0s5jx80wuP6Wns2USa1ryJONFqOIYSH7m9hyUdcCY"
+          },
+        });
+        setMovie(res.data);
+      } catch (err) {
+        console.log("dw");
+      }
+    };
+    getMovie();
+  }, [item]);
+
   return (
-    <div className="listitem" 
-    style={{left: isHovered && index*225-50 + index*2.5}}
-     onMouseEnter={()=>setIsHovered(true)}
-     onMouseLeave={()=>setIsHovered(false)}>
-      <img src="https://goggler.my/wp-content/uploads/2019/12/JM2_INTL_30Sht_BRIDGE_03-e1575889045252.jpg" />
-    
-    {isHovered && (
-      <>
-      <iframe src="https://www.youtube.com/embed/2QKg5SZ_35I" title="JUMANJI: WELCOME TO THE JUNGLE - Official Trailer (HD)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
-
-<div className="itemInfo">
-    <div className="icons">
-        <PlayArrow className="icon"/>
-        <Add className="icon"/>
-        <ThumbUpAltOutlined className="icon"/>
-        <ThumbDownOutlined className="icon"/>
-    </div>
-  
-    <div className="itemInfoTop">
-        <span>1 hour 14 mins</span>
-        <span className="limit">+16</span>
-        <span>1999</span>
-    </div>
-    <div className="desc">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-
-    <div className="genre">Action</div>
-</div>
-</>)}
-    
-  </div>
-  )
+    <Link to="/watch" state={{movie: movie}}>
+      <div
+        className="listItem"
+        style={{ left: isHovered && index * 225 - 50 + index * 2.5 }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <img src="https://picsum.photos/id/237/200/300" alt="" />
+        {isHovered && (
+          <>
+          <video className="video" autoPlay progress controls src="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+            <div className="itemInfo">
+              <div className="icons">
+                <PlayArrow className="icon" />
+                <Add className="icon" />
+                <ThumbUpAltOutlined className="icon" />
+                <ThumbDownOutlined className="icon" />
+              </div>
+              <div className="itemInfoTop">
+                <span>{movie.duration}</span>
+                <span className="limit">+{movie.limit}</span>
+                <span>{movie.year}</span>
+              </div>
+              <div className="desc">{movie.desc}</div>
+              <div className="genre">{movie.genre}</div>
+            </div>
+          </>
+        )}
+      </div>
+    </Link>
+  );
 }
 
-export default Listitem
-
+// token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMDA2NTMxMiwiZXhwIjoxNzAyNjU3MzEyfQ.-a0s5jx80wuP6Wns2USa1ryJONFqOIYSH7m9hyUdcCY"

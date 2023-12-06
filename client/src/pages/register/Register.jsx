@@ -20,7 +20,7 @@ function Register() {
     <div className="register">
         <div className="top">
         <div className="wrapper">
-            <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="" srcset="" />
+            <img className="logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt="" srcSet="" />
             <button className="loginButton">Sign In</button>
         </div>
         </div>
