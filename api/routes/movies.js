@@ -4,11 +4,14 @@ const verify = require("../verifyToken");
 
 
 router.post("/", verify, async (req, res) => {
+    
     if (req.user.isAdmin) {
         try {
+            
             const newMovie = new Movie(req.body);
             const savedMovie = await newMovie.save();
             res.status(201).json(savedMovie);
+            console.log("movie creation successful")
         } catch (err) {
             res.status(500).json({ error: "An error occurred while saving the movie." });
         }

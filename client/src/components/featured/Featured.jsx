@@ -7,22 +7,22 @@ function Featured({type}) {
 
     const [content, setContent] = useState({});
 
-    useEffect(()=>{
-        const getRandomContent = async ()=>{
-            try {
-                const res = await axios.get(`api/movies/random?type=${type}`,  {
-                    headers: {
-                      token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTUxNzY0MSwiZXhwIjoxNzA4MTA5NjQxfQ.NijWg5bGFkBY3TVlmcaxtrFKSdre7KvYNUEJs8xto6w"
-                    },
-                  });
-                  console.log(res.data)
-                setContent(res.data[0]);
-            } catch (err){
-                console.log(err);
-            }
+    useEffect(() => {
+        const getRandomContent = async () => {
+          try {
+            const res = await axios.get(`api/movies/random?type=${type}`, {
+              headers: {
+                token:
+                  "Bearer "+JSON.parse(localStorage.getItem("user")).accessToken,
+              },
+            });
+            setContent(res.data[0]);
+          } catch (err) {
+            console.log(err);
+          }
         };
         getRandomContent();
-    }, [type])
+      }, [type]);
 
   return (
     <div className="featured">

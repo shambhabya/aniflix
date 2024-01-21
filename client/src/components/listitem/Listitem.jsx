@@ -19,12 +19,13 @@ export default function ListItem({ index, item}) {
       try {
         const res = await axios.get("api/movies/find/" + item, {
           headers: {
-            token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTUxNzY0MSwiZXhwIjoxNzA4MTA5NjQxfQ.NijWg5bGFkBY3TVlmcaxtrFKSdre7KvYNUEJs8xto6w"
+            token:
+            "Bearer "+JSON.parse(localStorage.getItem("user")).accessToken,
           },
         });
         setMovie(res.data);
       } catch (err) {
-        console.log("dw");
+        console.log(err);
       }
     };
     getMovie();
@@ -41,7 +42,7 @@ export default function ListItem({ index, item}) {
         <img src="https://picsum.photos/id/237/200/300" alt="" />
         {isHovered && (
           <>
-          <video className="video" autoPlay progress controls src="http://media.w3.org/2010/05/sintel/trailer.mp4" />
+            <video src={movie.trailer} autoPlay={true} loop />
             <div className="itemInfo">
               <div className="icons">
                 <PlayArrow className="icon" />
