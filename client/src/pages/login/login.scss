@@ -1,27 +1,36 @@
 .login{
-    width: 100vw;
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-    background:linear-gradient(
-                to bottom,
-                rgba(0, 0, 0, 0) 0%,
-                rgba(0, 0, 0, 1) 100%
-                ), url(https://user-images.githubusercontent.com/33485020/108069438-5ee79d80-7089-11eb-8264-08fdda7e0d11.jpg);
-
-
-                background-size: cover;
-                position: relative;
     .top{
+        
         .wrapper{
-            padding: 20px 50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             .logo{
-                height: 40px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 50px;
+                margin-left: 50px;
+                text-decoration: none;
+                color: black;
+
+                &:hover{
+                    color: rgb(72, 69, 69);
+                }
             }
 
-            
+            .dashboard{
+                background-color: black;
+                border: none;
+                color: white;
+                border-radius: 5px;
+                padding: 8px 15px;
+                font-size: 18px;
+                cursor: pointer;
+                text-decoration: none;
+                margin-right: 50px;
+            }
 
         }
     }
@@ -29,14 +38,17 @@
     .container{
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         color: white;
+        background-color: black;
+        background:linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 0%,
+                rgba(0, 0, 0, 1) 100%
+                ), url(https://i.redd.it/tfqiq1aqjx351.png);
 
         form{
             width: 300px;
@@ -52,23 +64,24 @@
         input{
             height: 40px;
             border-radius: 5px;
-            background-color: gray;
-            color: white;
+            background-color: white;
+            color: black;
             padding-left: 10px;
-            &::placeholder{
-                color: lightgray;
-            }
         }
 
         button{
             height: 40px;
             border-radius: 5px;
-            background-color: red;
-            color: white;
+            background-color: #eeeeee;
+            color: rgb(7, 6, 6);
             border: none;
             font-size: 18px;
             font-weight: 500;
             cursor: pointer;
+
+            &:hover{
+                background-color: white;
+            }
         }
 
         span{
@@ -80,7 +93,7 @@
             }
 
             .lik{
-                color: red;
+                color: #f95959;
                 text-decoration: none;
                 
             }

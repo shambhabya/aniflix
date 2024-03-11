@@ -8,9 +8,8 @@ import { MovieContext } from "../../context/movieContext/MovieContext";
 export default function NewMovie() {
   const [movie, setMovie] = useState(null);
   const [img, setImg] = useState(null);
-  const [imgTitle, setImgTitle] = useState(null);
+  const [imgThumbnail, setImgThumbnail] = useState(null);
   const [imgSm, setImgSm] = useState(null);
-  const [trailer, setTrailer] = useState(null);
   const [video, setVideo] = useState(null);
   const [uploaded, setUploaded] = useState(0);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -63,16 +62,15 @@ export default function NewMovie() {
   const handleUpload = (e) => {
     e.preventDefault();
     
-    if (img && imgTitle && imgSm && trailer && video) {
+    if (img && imgThumbnail && imgSm && video && movie.trailer) {
       upload([
         { file: img, label: "img" },
-        { file: imgTitle, label: "imgTitle" },
+        { file: imgThumbnail, label: "imgThumbnail" },
         { file: imgSm, label: "imgSm" },
-        { file: trailer, label: "trailer" },
         { file: video, label: "video" },
       ]);
     } else {
-      console.log("Please select all five files before uploading.");
+      alert("Please select all five files before uploading.");
     };
 
   };
@@ -81,6 +79,10 @@ export default function NewMovie() {
     e.preventDefault();
     if(movie.title){
     createMovie(movie, dispatch);
+    alert("Movie creation successful");
+
+    // Reload the page
+    window.location.reload();
     } else{
       console.log("Give title and other details");
     }
@@ -91,7 +93,7 @@ export default function NewMovie() {
       <h1 className="addProductTitle">New Movie</h1>
       <form className="addProductForm">
         <div className="addProductItem">
-          <label>Image</label>
+          <label>Image (Portrait)</label>
           <input
             type="file"
             id="img"
@@ -100,16 +102,16 @@ export default function NewMovie() {
           />
         </div>
         <div className="addProductItem">
-          <label>Title image</label>
+          <label>Thumbnail image (Landscape)</label>
           <input
             type="file"
-            id="imgTitle"
-            name="imgTitle"
-            onChange={(e) => setImgTitle(e.target.files[0])}
+            id="imgThumbnail"
+            name="imgThumbnail"
+            onChange={(e) => setImgThumbnail(e.target.files[0])}
           />
         </div>
         <div className="addProductItem">
-          <label>Thumbnail image</label>
+          <label>Small image (Landscape)</label>
           <input
             type="file"
             id="imgSm"
@@ -179,11 +181,11 @@ export default function NewMovie() {
           </select>
         </div>
         <div className="addProductItem">
-          <label>Trailer</label>
+          <label>Trailer (Youtube Link Id)</label>
           <input
-            type="file"
+            type="text"
             name="trailer"
-            onChange={(e) => setTrailer(e.target.files[0])}
+            onChange={handleChange}
           />
         </div>
         <div className="addProductItem">
@@ -201,7 +203,7 @@ export default function NewMovie() {
         </div>
           )}
 
-        {uploaded === 5 ? (
+        {uploaded === 4 ? (
           <button className="addProductButton" onClick={handleSubmit}>
             Create
           </button>

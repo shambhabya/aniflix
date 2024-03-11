@@ -2,8 +2,12 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage"
 
+
+
+const API_KEY = process.env.FIREBASE_API_KEY ;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBhAiK1vpZOpBGtDU3NlHj6xWEuIqZl2X0",
+  apiKey: API_KEY,
   authDomain: "aniflix-4739c.firebaseapp.com",
   projectId: "aniflix-4739c",
   storageBucket: "aniflix-4739c.appspot.com",

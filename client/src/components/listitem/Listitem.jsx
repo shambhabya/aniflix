@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import YouTube from 'react-youtube';
 
 export default function ListItem({ index, item}) {
   const [isHovered, setIsHovered] = useState(false);
@@ -31,6 +32,32 @@ export default function ListItem({ index, item}) {
     getMovie();
   }, [item]);
 
+
+  const opts = {
+    height: '140',
+    width: '100%',
+    playerVars: {
+      autoplay: 0,
+      modestbranding: 1, // Remove YouTube logo
+      quality: 'small', // Set video quality to 360p
+    },
+  };
+
+  // YouTube video ID
+
+  // Event handlers
+  const onReady = (event) => {
+  };
+
+  const onEnd = (event) => {
+    // do something when the video ends
+  };
+
+  const onError = (event) => {
+    // handle errors
+  };
+
+
   return (
     <Link to="/watch" state={{movie: movie}}>
       <div
@@ -39,10 +66,17 @@ export default function ListItem({ index, item}) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <img src="https://picsum.photos/id/237/200/300" alt="" />
+        { !isHovered && (<img src={movie.img} alt="" /> )}
         {isHovered && (
           <>
-            <video src={movie.trailer} autoPlay={true} loop />
+          <YouTube
+      videoId={movie.trailer}
+      opts={opts}
+      onReady={onReady}
+      onEnd={onEnd}
+      onError={onError}
+      className="video"
+    />
             <div className="itemInfo">
               <div className="icons">
                 <PlayArrow className="icon" />
@@ -51,6 +85,7 @@ export default function ListItem({ index, item}) {
                 <ThumbDownOutlined className="icon" />
               </div>
               <div className="itemInfoTop">
+              <span>{movie.title}</span>
                 <span>{movie.duration}</span>
                 <span className="limit">+{movie.limit}</span>
                 <span>{movie.year}</span>
@@ -65,4 +100,3 @@ export default function ListItem({ index, item}) {
   );
 }
 
-// token: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwMDA2NTMxMiwiZXhwIjoxNzAyNjU3MzEyfQ.-a0s5jx80wuP6Wns2USa1ryJONFqOIYSH7m9hyUdcCY"

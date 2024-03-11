@@ -21,7 +21,7 @@ const Navbar = () => {
     <div className={isScrolled ? "navbar scrolled" : "navbar"}>
       <div className="container">
         <div className="left">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png" alt=""></img>
+            <Link to="/" className="link"><div className="logo">ANIFLIX</div></Link>
             <Link to="/" className="link">
               <span>Homepage</span>
             </Link>
@@ -32,22 +32,23 @@ const Navbar = () => {
               <span>Movies</span>
             </Link>
             
-            <span>New And Popular</span>
-            <span>My List</span>
+            <span className="link">New And Popular</span>
+            <span className="link">My List</span>
 
         </div>
-        <div className="right">
+
+      <div className="right">
         <Search className="icon"/>
         <span>KID</span>
         <Notifications className="icon"/>
         <img src="https://i.pinimg.com/originals/3f/70/9d/3f709d992830ae064bfc48ef69ec9dd9.jpg"></img>
         <div className="profile">
-            <ArrowDropDown className="icon"/>
+            <ArrowDropDown className="icon arrow-drop"/>
             <div className="options">
                 <span>Settings</span>
                 <span onClick={() => dispatch(logout())}>Logout</span>
             </div>
-        </div>
+      </div>
 
         
         </div>

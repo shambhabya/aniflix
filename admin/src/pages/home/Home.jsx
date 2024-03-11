@@ -7,6 +7,7 @@ import WidgetLg from "../../components/widgetLg/WidgetLg";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 
+
 export default function Home() {
   const MONTHS = useMemo(()=>["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], []);
 
@@ -14,11 +15,10 @@ export default function Home() {
 
   useEffect(()=>{
     const getStats = async ()=>{
-      try{
-      const res = await axios.get("http://localhost:8800/api/users/stats", {
+      try{ 
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/users/stats`, {
         headers:{
-          token:
-          "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Mzk3MDZkZTM5ZDgyNTQ4ODJmODhjMCIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcwNTUxNzY0MSwiZXhwIjoxNzA4MTA5NjQxfQ.NijWg5bGFkBY3TVlmcaxtrFKSdre7KvYNUEJs8xto6w"
+          token: "Bearer " + JSON.parse(localStorage.getItem("user")).accessToken
       },
     });
     const statsList = res.data.sort( function (a, b){

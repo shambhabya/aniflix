@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./register.scss";
+import Footer from "../../components/footer/Footer";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -15,33 +16,42 @@ export default function Register() {
   const usernameRef = useRef();
 
   const handleStart = () => {
-    setEmail(emailRef.current.value);
+    const enteredEmail = emailRef.current.value;
+
+    // Simple email validation using regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(enteredEmail)) {
+      setEmail(enteredEmail);
+    } else {
+      // Handle invalid email
+      alert("Please enter a valid email address");
+    }
   };
+  
+
   const handleFinish = async (e) => {
     e.preventDefault();
-    setPassword(passwordRef.current.value);
-    setUsername(usernameRef.current.value);
     try {
-      await axios.post("api/auth/register", { email,username, password });
+      const res = await axios.post("api/auth/register", { email,username, password });
       navigate("/login");
     } catch (err) {
         console.log(err);
+        alert("Error, try again");
     }
   };
   return (
     <div className="register">
       <div className="top">
         <div className="wrapper">
-          <img
-            className="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
-          />
+          <Link to="/" className="logo">ANIFLIX</Link>
+          <div>
           <Link to="/login" className="loginButton">Sign In</Link>
+          <a href="" className="loginButton">Admin Dashboard</a>
+          </div>
         </div>
       </div>
       <div className="container">
-        <h1>Unlimited movies, TV shows, and more.</h1>
+        <h1>Unlimited anime shows and movies.</h1>
         <h2>Watch anywhere. Cancel anytime.</h2>
         <p>
           Ready to watch? Enter your email to create or restart your membership.
@@ -55,14 +65,15 @@ export default function Register() {
           </div>
         ) : (
           <form className="input">
-            <input type="username" placeholder="username" ref={usernameRef} />
-            <input type="password" placeholder="password" ref={passwordRef} />
+            <input type="username" value={username } onChange={(e) => setUsername(e.target.value)} placeholder="username" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="password" />
             <button className="registerButton" onClick={handleFinish}>
               Start
             </button>
           </form>
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

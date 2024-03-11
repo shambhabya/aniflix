@@ -3,6 +3,8 @@ import { login } from "../../authContext/apiCalls";
 import { AuthContext } from "../../authContext/AuthContext";
 import "./login.scss";
 import { Link } from "react-router-dom";
+import logo from "../../public/Ani.png"
+import Footer from "../../components/footer/Footer";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -25,11 +27,10 @@ export default function Login() {
     <div className="login">
       <div className="top">
         <div className="wrapper">
-          <img
-            className="logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/2560px-Netflix_2015_logo.svg.png"
-            alt=""
-          />
+          <Link to="/" className="logo">
+            ANIFLIX
+          </Link>
+          <a href="" className="dashboard">Admin Dashboard</a>
         </div>
       </div>
       <div className="container">
@@ -51,17 +52,14 @@ export default function Login() {
             Sign In
           </button>
           <button className="loginButton" onClick={setTestUser}>
-            Log in as test user
+            Sign in as guest user
           </button>
           <span>
-            New to Netflix? <b><Link to="/register" className="lik">Sign up now.</Link></b>
+            New to Aniflix? <b><Link to="/register" className="lik">Sign up now.</Link></b>
           </span>
-          <small>
-            This page is protected by Google reCAPTCHA to ensure you're not a
-            bot. <b>Learn more</b>.
-          </small>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -10,9 +10,11 @@ const cors = require("cors");
 
 dotenv.config();
 
+const PORT = process.env.PORT || 8800;
+const MONGO_KEY = process.env.MONGO_KEY;
 
+mongoose.connect(`${MONGO_KEY}/netflix`, { useNewUrlParser: true, useUnifiedTopology: true })
 
-mongoose.connect('mongodb://localhost:27017/netflix',{useNewUrlParser: true, useUnifiedTopology: true,})
 .then(()=>{
     console.log("DB connection successful")
 })
@@ -29,6 +31,6 @@ app.use("/api/movies", movieRoute);
 app.use("/api/lists", listRoute);
 
 
-app.listen(8800,()=>{
+app.listen(PORT,()=>{
     console.log("Backend server running at 8800")
 })  
