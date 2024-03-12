@@ -34,3 +34,7 @@ app.use("/api/lists", listRoute);
 app.listen(PORT,()=>{
     console.log("Backend server running at 8800")
 })  
+
+app.get('/', (req, res) => {
+  res.status(200).send('Server live');
+});
